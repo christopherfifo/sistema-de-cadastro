@@ -38,28 +38,6 @@
             }
         }
     </script>
-    <script>
-        (function() {
-            const userPref = localStorage.getItem('theme');
-            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-            if (userPref === 'dark' || (!userPref && systemPrefersDark)) {
-                document.documentElement.classList.add('dark');
-            } else {
-                document.documentElement.classList.remove('dark');
-            }
-        })();
-
-        const toggleTheme = () => {
-            if (document.documentElement.classList.contains('dark')) {
-                document.documentElement.classList.remove('dark');
-                localStorage.setItem('theme', 'light');
-            } else {
-                document.documentElement.classList.add('dark');
-                localStorage.setItem('theme', 'dark');
-            }
-        }
-    </script>
     <style type="text/tailwindcss">
         @layer utilities {
             .error-border {
@@ -116,7 +94,7 @@
                 </span>
             </a>
         </button>
-        <button class="tema bg-transparent border-none w-auto p-0 m-0 cursor-pointer" onclick="toggleTheme()">
+        <button class="tema bg-transparent border-none w-auto p-0 m-0 cursor-pointer" id="trocaTema">
             <i class="fa-solid fa-sun obj text-2xl !text-black dark:!text-darkblue" id="dark"></i>
         </button>
     </header>

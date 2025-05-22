@@ -18,6 +18,7 @@ if (!$usuario) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../javascript/usuarioPage/usuario.js" defer></script>
   <title>Dados do Usuário</title>
   <script>
     tailwind.config = {
@@ -30,23 +31,6 @@ if (!$usuario) {
           },
         }
       }
-    }
-  </script>
-  <script>
-    (function () {
-      const userPref = localStorage.getItem('theme');
-      const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      if (userPref === 'dark' || (!userPref && systemPrefersDark)) {
-        document.documentElement.classList.add('dark');
-      } else {
-        document.documentElement.classList.remove('dark');
-      }
-    })();
-    const toggleTheme = () => {
-      const html = document.documentElement;
-      const theme = html.classList.contains('dark') ? 'light' : 'dark';
-      html.classList.toggle('dark');
-      localStorage.setItem('theme', theme);
     }
   </script>
 </head>
@@ -69,7 +53,7 @@ if (!$usuario) {
     </div>
 
     <div class="text-center">
-      <button onclick="toggleTheme()" class="mt-6 text-sm underline hover:text-primary transition">Alternar tema</button>
+      <button class="mt-6 text-sm underline hover:text-primary transition" id="trocaTema">Alternar tema</button>
     </div>
   </div>
 </body>

@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../javascript/homePage/home.js" defer></script>
   <title>Sistema de Chamados</title>
   <script>
     tailwind.config = {
@@ -17,28 +18,6 @@
             darkblue: 'rgb(43, 43, 151)',
           },
         }
-      }
-    }
-  </script>
-  <script>
-    (function() {
-      const userPref = localStorage.getItem('theme');
-      const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-      if (userPref === 'dark' || (!userPref && systemPrefersDark)) {
-        document.documentElement.classList.add('dark');
-      } else {
-        document.documentElement.classList.remove('dark');
-      }
-    })();
-
-    const toggleTheme = () => {
-      if (document.documentElement.classList.contains('dark')) {
-        document.documentElement.classList.remove('dark');
-        localStorage.setItem('theme', 'light');
-      } else {
-        document.documentElement.classList.add('dark');
-        localStorage.setItem('theme', 'dark');
       }
     }
   </script>
@@ -70,7 +49,7 @@
         </div>
 
         <!-- Alternância de tema -->
-        <button onclick="toggleTheme()" class="mt-6 text-sm underline hover:text-primary transition">Alternar tema</button>
+        <button id="trocaTema" class="mt-6 text-sm underline hover:text-primary transition">Alternar tema</button>
       </div>
 
     </div>

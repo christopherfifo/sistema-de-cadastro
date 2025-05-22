@@ -1,17 +1,47 @@
-//! trocar de tema
+//! Tema escuro/claro automático e botão de alternância
 
-const obj = document.querySelectorAll(".obj");
-const icon = document.getElementById("dark");
+(function () {
+  const userPref = localStorage.getItem("theme");
+  const systemPrefersDark = window.matchMedia(
+    "(prefers-color-scheme: dark)"
+  ).matches;
+  const html = document.documentElement;
+  const icon = document.getElementById("dark");
 
-icon.addEventListener("click", respostaTema);
+  if (userPref === "dark" || (!userPref && systemPrefersDark)) {
+    html.classList.add("dark");
+    icon.classList.remove("fa-sun");
+    icon.classList.add("fa-moon");
+  } else {
+    html.classList.remove("dark");
+    icon.classList.remove("fa-moon");
+    icon.classList.add("fa-sun");
+  }
+})();
 
-function respostaTema() {
-  obj.forEach((element) => {
-    element.classList.toggle("dark");
-  });
-  icon.classList.toggle("fa-sun");
-  icon.classList.toggle("fa-moon");
+function toggleTheme() {
+  const html = document.documentElement;
+  const icon = document.getElementById("dark");
+  if (html.classList.contains("dark")) {
+    html.classList.remove("dark");
+    localStorage.setItem("theme", "light");
+    icon.classList.remove("fa-moon");
+    icon.classList.add("fa-sun");
+  } else {
+    html.classList.add("dark");
+    localStorage.setItem("theme", "dark");
+    icon.classList.remove("fa-sun");
+    icon.classList.add("fa-moon");
+  }
 }
+
+// Adiciona o evento ao botão de tema
+document.addEventListener("DOMContentLoaded", function () {
+  const btnTrocaThema = document.getElementById("trocaTema");
+  if (btnTrocaThema) {
+    btnTrocaThema.addEventListener("click", toggleTheme);
+  }
+});
 
 //! mostrar o gerador de senha
 
@@ -146,4 +176,3 @@ btnCopiar.addEventListener("click", function () {
   }
   gerarGerador();
 });
-
