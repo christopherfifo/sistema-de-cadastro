@@ -5,55 +5,52 @@ session_start();
 
 class AuthControllerClient
 {
-public function register()
-{
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $name = $_POST['name'];
-        $cpf = $_POST['cpf'];
-        $email = $_POST['email'];
-        $telephone = $_POST['telephone'];
-        $password = $_POST['password'];
+    public function register()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $name = $_POST['name'];
+            $cpf = $_POST['cpf'];
+            $email = $_POST['email'];
+            $telephone = $_POST['telephone'];
+            $password = $_POST['password'];
 
-        $userModel = new UserModel();
+            $userModel = new UserModel();
 
-        // Verifica se o email já existe
-        if ($userModel->confereEmail($email)) {
-            echo json_encode(['error' => 'Email já cadastrado!']);
-            return;
+            // Verifica se o email já existe
+            if ($userModel->confereEmail($email)) {
+                echo json_encode(['error' => 'Email já cadastrado!']);
+                return;
+            }
+
+            // Verifica se o CPF já existe
+            if ($userModel->confereCpf($cpf)) {
+                echo json_encode(['error' => 'CPF já cadastrado!']);
+                return;
+            }
+
+            if ($userModel->register($name, $cpf, $email, $telephone, $password)) {
+                $user = $userModel->login($email, $password);
+                if ($user) {
+                    $_SESSION['user'] = $user;
+                    $token = bin2hex(random_bytes(32));
+                    $_SESSION['token'] = $token;
+                    echo json_encode([
+                        'success' => 'Cadastro realizado com sucesso!',
+                        'redirect' => '../view/usuarioPage.php?id=' . $user['id']
+                    ]);
+                    return;
+                } else {
+                    echo json_encode(['error' => 'Credenciais inválidas!']);
+                    return;
+                }
+            } else {
+                echo json_encode(['error' => 'Erro ao registrar usuário.']);
+                return;
+            }
+        } else {
+            echo json_encode(['error' => 'Método não permitido.']);
         }
-
-        // Verifica se o CPF já existe
-        if ($userModel->confereCpf($cpf)) {
-            echo json_encode(['error' => 'CPF já cadastrado!']);
-            return;
-        }
-
-        if ($userModel->register($name, $cpf, $email, $telephone, $password)) {
-    $user = $userModel->login($email, $password);
-    if ($user) {
-        $_SESSION['user'] = $user;
-        $token = bin2hex(random_bytes(32));
-        $_SESSION['token'] = $token;
-        // Retorna a URL de redirecionamento com o id do usuário
-        echo json_encode([
-            'success' => 'Cadastro realizado com sucesso!',
-            'redirect' => '../view/usuarioPage.php?id=' . $user['id']
-        ]);
-        return;
-    } else {
-        echo json_encode(['error' => 'Credenciais inválidas!']);
-        return;
     }
-} else {
-    echo json_encode(['error' => 'Erro ao registrar usuário.']);
-    return;
-}
-    } else {
-        echo json_encode(['error' => 'Método não permitido.']);
-    }
-}
-
-
 
     public function login()
     {
@@ -73,8 +70,8 @@ public function register()
             }
         }
     }
-
 }
+
 // Roteamento básico usando POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     $authController = new AuthControllerClient();
