@@ -12,15 +12,12 @@ loginbtn.addEventListener("click", () => {
   container.classList.remove("right-panel-active");
 });
 
-// Seleciona elementos do DOM
 const formRegister = document.getElementById("form"); // Formulário de registro
 const campos = document.querySelectorAll(".required"); // Campos obrigatórios
 const span = document.querySelectorAll(".error_span"); // Mensagens de erro
 const validarRegistro = document.getElementById("vali_register"); // Botão de registro
 const emailRegex =
   /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
-
-// Seleciona elementos do login
 
 const passwordInput = document.getElementById("senha_entrar"); // Campo de senha
 
@@ -45,7 +42,7 @@ const validators = [
     if (value === "") return "Campo Obrigatório";
     if (value !== campos[4].value) return "As senhas não coincidem."; // Comparação com o campo de senha
     return true;
-  }, // Confirmação de senha
+  }, 
 ];
 
 // Funções de manipulação de erros
@@ -109,7 +106,6 @@ async function validacaoFinal(event) {
   }
 }
 
-// Adiciona o ouvinte de eventos para o botão de registro
 validarRegistro.addEventListener("click", validacaoFinal);
 
 //! local storege
@@ -126,7 +122,6 @@ document.addEventListener("DOMContentLoaded", function () {
     rememberCheckbox.checked = true;
   }
 
-  // Adiciona um evento de mudança ao checkbox
   rememberCheckbox.addEventListener("change", function () {
     if (this.checked) {
       localStorage.setItem("accessInfo", accessInput.value);
@@ -150,7 +145,6 @@ document.querySelectorAll(".olhos").forEach(function (icon) {
     // Seleciona o input associado ao ícone clicado
     const input = this.previousElementSibling;
 
-    // Alterna o tipo do input entre 'password' e 'text'
     if (input.type === "password") {
       input.type = "text";
       this.classList.remove("fa-eye");
